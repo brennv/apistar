@@ -32,7 +32,7 @@ pre.highlight code {
   overflow: auto;
   font-size: 12px;
   font-weight: 200;
-  background-color: #2e353d;
+  background-color: #3320a2;
   position: fixed;
   top: 0px;
   width: 225px;
@@ -41,7 +41,7 @@ pre.highlight code {
 }
 
 .sidebar .brand {
-    background-color: #23282e;
+    background-color: #3320a2;
     display: block;
     text-align: center;
     padding: 25px 0;
@@ -65,7 +65,7 @@ pre.highlight code {
 
 .sidebar .menu-list ul,
 .sidebar .menu-list li {
-  background: #2e353d;
+  background: #0000ff;
   list-style: none;
   padding: 0px;
   margin: 0px;
@@ -92,17 +92,17 @@ pre.highlight code {
 
 .sidebar .menu-list ul .sub-menu li.active,
 .sidebar .menu-list li .sub-menu li.active {
-  color: #ddabab;
+  color: #ffffff;
 }
 
 .sidebar .menu-list ul .sub-menu li.active a,
 .sidebar .menu-list li .sub-menu li.active a {
-  color: #ddabab;
+  color: #ffffff;
 }
 
 .sidebar .menu-list ul .sub-menu li,
 .sidebar .menu-list li .sub-menu li {
-  background-color: #181c20;
+  background-color: #0000ff;
   border: none;
   border-bottom: 1px solid #23282e;
   margin-left: 0px;
@@ -111,7 +111,7 @@ pre.highlight code {
 
 .sidebar .menu-list ul .sub-menu li:hover,
 .sidebar .menu-list li .sub-menu li:hover {
-  background-color: #020203;
+  background-color: #3320a2;
 }
 
 
@@ -132,7 +132,7 @@ pre.highlight code {
 
 .sidebar .menu-list li {
   padding-left: 0px;
-  border-left: 3px solid #2e353d;
+  border-left: 3px solid #3320a2;
   border-bottom: 1px solid #23282e;
 }
 
@@ -148,8 +148,8 @@ pre.highlight code {
 }
 
 .sidebar .menu-list li:hover {
-  border-left: 3px solid #ddabab;
-  background-color: #4f5b69;
+  border-left: 3px solid #ffffff;
+  background-color: #3320a2;
   -webkit-transition: all 1s ease;
   -moz-transition: all 1s ease;
   -o-transition: all 1s ease;
@@ -203,7 +203,7 @@ body {
 .sidebar .menu-list-bottom li span {
   float: right;
   margin-right: 20px;
-  color: #ddabab;
+  color: #ffffff;
 }
 
 /* @end Language Switcher */
