@@ -2,6 +2,22 @@
 
 ## Version 0.5.x
 
+### 0.5.18
+
+* Fix parsing of OpenAPI documents with request bodies.
+
+### 0.5.17
+
+* Add 'SecurityScheme' to OpenAPI and allow 'responses' to use reference objects.
+
+### 0.5.16
+
+* Improved error formatting.
+
+### 0.5.15
+
+* Fix 'responses' and 'parameters' in OpenAPI spec.
+
 ### 0.5.14
 
 * Added 'headers' to OpenAPI spec.

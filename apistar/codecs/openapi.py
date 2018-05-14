@@ -14,7 +14,9 @@ from apistar.exceptions import ParseError
 SCHEMA_REF = validators.Object(
     properties={'$ref': validators.String(pattern='^#/components/schemas/')}
 )
-
+RESPONSE_REF = validators.Object(
+    properties={'$ref': validators.String(pattern='^#/components/responses/')}
+)
 
 OPEN_API = validators.Object(
     def_name='OpenAPI',
@@ -98,7 +100,7 @@ OPEN_API = validators.Object(
         ),
         'Paths': validators.Object(
             pattern_properties=[
-                ('^/', validators.Ref('Path')),  # TODO: Path | ReferenceObject
+                ('^/', validators.Ref('Path')),
                 ('^x-', validators.Any()),
             ],
             additional_properties=False,
@@ -186,10 +188,10 @@ OPEN_API = validators.Object(
         ),
         'Responses': validators.Object(
             properties=[
-                ('default', validators.Ref('Response')),  # TODO: | ReferenceObject
+                ('default', validators.Ref('Response') | RESPONSE_REF),
             ],
             pattern_properties=[
-                ('^([1-5][0-9][0-9]|[1-5]XX)$', validators.Ref('Response')),  # TODO: | ReferenceObject
+                ('^([1-5][0-9][0-9]|[1-5]XX)$', validators.Ref('Response') | RESPONSE_REF),
                 ('^x-', validators.Any()),
             ],
             additional_properties=False,
@@ -239,6 +241,7 @@ OPEN_API = validators.Object(
                 ('schemas', validators.Object(additional_properties=JSON_SCHEMA)),
                 ('responses', validators.Object(additional_properties=validators.Ref('Response'))),
                 ('parameters', validators.Object(additional_properties=validators.Ref('Parameter'))),
+                ('securitySchemes', validators.Object(additional_properties=validators.Ref('SecurityScheme'))),
                 # TODO: Other fields
             ],
             pattern_properties={
@@ -260,7 +263,24 @@ OPEN_API = validators.Object(
         ),
         'SecurityRequirement': validators.Object(
             additional_properties=validators.Array(items=validators.String()),
-        )
+        ),
+        'SecurityScheme': validators.Object(
+            properties=[
+                ('type', validators.String(enum=['apiKey', 'http', 'oauth2', 'openIdConnect'])),
+                ('description', validators.String(format='textarea')),
+                ('name', validators.String()),
+                ('in', validators.String(enum=['query', 'header', 'cookie'])),
+                ('scheme', validators.String()),
+                ('bearerFormat', validators.String()),
+                ('flows', validators.Any()),  # TODO: OAuthFlows
+                ('openIdConnectUrl', validators.String()),
+            ],
+            pattern_properties={
+                '^x-': validators.Any(),
+            },
+            additional_properties=False,
+            required=['type']
+        ),
     }
 )
 
@@ -442,9 +462,7 @@ class OpenAPICodec(BaseCodec):
                 schema = schema_definitions.get(ref)
             else:
                 schema = JSONSchemaCodec().decode_from_data_structure(body_schema)
-            if isinstance(schema, validators.Object):
-                for key, value in schema.properties.items():
-                    fields += [Field(name=key, location='form', schema=value)]
+            fields += [Field(name='body', location='body', schema=schema)]
 
         return Link(
             name=name,
